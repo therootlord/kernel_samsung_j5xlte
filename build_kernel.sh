@@ -1,7 +1,6 @@
 #!/bin/bash
 
-export ARCH=arm
-export CROSS_COMPILE=../PLATFORM/prebuilts/gcc/linux-x86/arm/arm-eabi-4.8/bin/arm-eabi-
+make VARIANT_DEFCONFIG=msm8916_sec_j5lte_eur_defconfig msm8916_sec_defconfig SELINUX_DEFCONFIG=selinux_defconfig
+make -j9
 
-make msm8916_sec_defconfig VARIANT_DEFCONFIG=msm8916_sec_j5xlte_eur_defconfig SELINUX_DEFCONFIG=selinux_defconfig
-make -j
+cp output/arch/arm/boot/Image $(pwd)/arch/arm/boot/zImage
