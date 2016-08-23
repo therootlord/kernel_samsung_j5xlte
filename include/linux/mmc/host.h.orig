@@ -445,7 +445,6 @@ struct mmc_host {
 		unsigned int	down_threshold;
 		ktime_t		start_busy;
 		bool		enable;
-		bool		scale_down_in_low_wr_load;
 		bool		initialized;
 		bool		in_progress;
 		/* freq. transitions are not allowed in invalid state */
@@ -459,6 +458,7 @@ struct mmc_host {
 	 * actually disabling the clock from it's source.
 	 */
 	bool			card_clock_off;
+    unsigned int		card_detect_cnt;
 	unsigned long		private[0] ____cacheline_aligned;
 };
 

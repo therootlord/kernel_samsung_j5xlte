@@ -163,6 +163,36 @@ config CPU_FREQ_DEFAULT_GOV_INTERACTIVE_PRO
 	help
 	Use the CPUFreq governor 'interactive_pro' as default.
 
+config CPU_FREQ_DEFAULT_GOV_AUTHORITY
+	bool "authority"
+	select CPU_FREQ_GOV_AUTHORITY
+
+config CPU_FREQ_DEFAULT_GOV_ELECTRODEMAND
+	bool "electrodemand"
+	select CPU_FREQ_GOV_ELECTRODEMAND
+
+config CPU_FREQ_DEFAULT_GOV_HYPER
+ 	bool "hyper"
+ 	select CPU_FREQ_GOV_HYPER
+
+config CPU_FREQ_DEFAULT_GOV_YANKACTIVE
+ 	bool "yankactive"
+ 	select CPU_FREQ_GOV_YANKACTIVE
+
+config CPU_FREQ_DEFAULT_GOV_INTEL
+	bool "intel"
+	select CPU_FREQ_GOV_INTEL
+	help
+	  Use the CPUFreq governor 'intel' as default. This allows
+	  you to get a full dynamic cpu frequency capable system by simply
+	  loading your cpufreq low-level hardware driver, using the
+	  'intel' governor for better perfromance and power with Intel
+	  mobile platforms.
+
+config CPU_FREQ_DEFAULT_GOV_ALUCARD
+ 	bool "alucard"
+ 	select CPU_FREQ_GOV_ALUCARD
+
 endchoice
 
 config CPU_FREQ_GOV_PERFORMANCE
@@ -291,6 +321,46 @@ config CPU_FREQ_GOV_INTELLIACTIVE
 config CPU_FREQ_GOV_INTERACTIVE_PRO
 	tristate "'interactive_pro' cpufreq governor"
 	depends on CPU_FREQ
+
+config CPU_FREQ_GOV_AUTHORITY
+	tristate "'authority' cpufreq policy governor"
+
+config CPU_FREQ_GOV_ELECTRODEMAND
+ 	tristate "'electrodemand' cpufreq policy governor"
+        depends on CPU_FREQ
+
+config CPU_FREQ_GOV_HYPER
+ 	tristate "'hyper' cpufreq governor"
+ 	depends on CPU_FREQ
+ 	---help---
+ 	  'hyper' - A tweaked "ondemand" based smart and smooth optimized governor!
+
+config CPU_FREQ_GOV_YANKACTIVE
+ 	tristate "'yankactive' cpufreq policy governor"
+ 	help
+   	  'yankactive' - This driver adds a dynamic cpufreq policy governor designed for latency-sensitive workloads. The governor is based on interactive with just different default settings and can be achieved using interactive with a script. This is added for simplification purposes for myself.
+
+config CPU_FREQ_GOV_INTEL
+	tristate "'intel' cpufreq policy governor"
+	help
+	  'intel' - This driver adds a dynamic cpufreq policy governor
+	  designed for Intel mobile platform.
+
+	  This governor uses physical core load, dynamic timer switching,
+	  dynamic sampling window sizing, and tailored CPU frequency scaling,
+	  which brings good performance, power efficiency and responsiveness
+	  to common Android applications with Intel mobile platforms.
+
+	  To compile this driver as a module, choose M here: the
+	  module will be called cpufreq_intel.
+
+	  For details, take a look at linux/Documentation/cpu-freq.
+
+	  If in doubt, say N. 
+
+config CPU_FREQ_GOV_ALUCARD
+ 	tristate "'alucard' cpufreq governor"
+ 	depends on CPU_FREQ 
 
 config CPU_BOOST
 	tristate "Event base short term CPU freq boost"
