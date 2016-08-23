@@ -363,6 +363,14 @@ config MSM_PIL
 
 	  Say yes to support these devices.
 
+config FORCE_FAST_CHARGE
+       bool "Force faster charge rate for AC/USB"
+       default y
+        help
+        This allows users to override default charge rate for both USB and AC
+        charger input current
+
+
 config MSM_PIL_SSR_GENERIC
 	tristate "MSM Subsystem Boot Support"
 	depends on MSM_PIL && MSM_SUBSYSTEM_RESTART
