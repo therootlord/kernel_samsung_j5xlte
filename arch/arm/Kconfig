@@ -1795,6 +1795,8 @@ config PERF_EVENTS_RESET_PMU_DEBUGFS
 
 source "mm/Kconfig"
 
+source "arch/arm/hotplug/Kconfig
+
 choice
 	prompt "Virtual Memory Reclaim"
 	default NO_VM_RECLAIM
