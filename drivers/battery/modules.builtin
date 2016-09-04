@@ -1,3 +1,0 @@
-kernel/drivers/battery/sec_battery.ko
-kernel/drivers/battery/sm5703_fuelgauge.ko
-kernel/drivers/battery/sm5703_charger.ko
