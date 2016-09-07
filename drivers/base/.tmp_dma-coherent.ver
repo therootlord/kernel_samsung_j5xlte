@@ -1,0 +1,6 @@
+__crc_dma_declare_coherent_memory = 0xcb133ac8 ;
+__crc_dma_release_declared_memory = 0xe57bad2b ;
+__crc_dma_mark_declared_memory_occupied = 0x5e28cfa0 ;
+__crc_dma_alloc_from_coherent = 0xfacb6b3f ;
+__crc_dma_release_from_coherent = 0x25588a61 ;
+__crc_dma_mmap_from_coherent = 0x763036f2 ;
