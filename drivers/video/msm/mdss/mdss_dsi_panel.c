@@ -43,6 +43,8 @@
 
 DEFINE_LED_TRIGGER(bl_led_trigger);
 
+bool mdss_screen_on = true;
+
 void mdss_dsi_panel_pwm_cfg(struct mdss_dsi_ctrl_pdata *ctrl)
 {
 	if (ctrl->pwm_pmi)
@@ -721,6 +723,7 @@ static int mdss_dsi_panel_on(struct mdss_panel_data *pdata)
 		return -EINVAL;
 	}
 
+	mdss_screen_on = true;
 	pinfo = &pdata->panel_info;
 	ctrl = container_of(pdata, struct mdss_dsi_ctrl_pdata,
 				panel_data);
@@ -793,6 +796,8 @@ static int mdss_dsi_post_panel_on(struct mdss_panel_data *pdata)
 		msleep(50);	/* wait for 3 vsync passed */
 		mdss_dsi_panel_cmds_send(ctrl, on_cmds);
 	}
+
+	mdss_screen_on = false;
 
 end:
 	pr_debug("%s:-\n", __func__);
