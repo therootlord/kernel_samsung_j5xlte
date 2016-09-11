@@ -341,7 +341,6 @@ config KSM_LEGACY
 	help
 	The legacy KSM implementation from Redhat.
 endchoice
-
 config ADAPTIVE_KSM
 	bool "Enable Adaptive KSM"
 	depends on KSM
