@@ -9,3 +9,5 @@ build_kernel/
 output/
 bk.sh
 bk_.sh
+*.fw
+*.bin
