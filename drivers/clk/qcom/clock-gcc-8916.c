@@ -222,6 +222,7 @@ static void __iomem *virt_bases[N_BASES];
 #define CAMSS_AHB_CMD_RCGR				0x5A000
 #define BIMC_GFX_CBCR					0x31024
 #define BIMC_GPU_CBCR					0x31040
+#define SNOC_QOSGEN					0x2601C
 
 #define APCS_SH_PLL_MODE				0x00000
 #define APCS_SH_PLL_L_VAL				0x00004
@@ -348,14 +349,8 @@ static struct pll_freq_tbl apcs_pll_freq[] = {
 	F_APCS_PLL(1248000000, 65, 0x0, 0x1, 0x0, 0x0, 0x0),
 	F_APCS_PLL(1363200000, 71, 0x0, 0x1, 0x0, 0x0, 0x0),
 	F_APCS_PLL(1401600000, 73, 0x0, 0x1, 0x0, 0x0, 0x0),
-	F_APCS_PLL(1497600000, 78, 0x0, 0x1, 0x0, 0x0, 0x0),
-	F_APCS_PLL(1593600000, 83, 0x0, 0x1, 0x0, 0x0, 0x0),
-	F_APCS_PLL(1689600000, 88, 0x0, 0x1, 0x0, 0x0, 0x0),
-	F_APCS_PLL(1785600000, 93, 0x0, 0x1, 0x0, 0x0, 0x0),
-	F_APCS_PLL(1881600000, 98, 0x0, 0x1, 0x0, 0x0, 0x0),
-	F_APCS_PLL(1977600000, 103, 0x0, 0x1, 0x0, 0x0, 0x0),
-	F_APCS_PLL(2073600000, 108, 0x0, 0x1, 0x0, 0x0, 0x0),
-	F_APCS_PLL(2169600000, 113, 0x0, 0x1, 0x0, 0x0, 0x0),
+	F_APCS_PLL(1536600000, 78, 0x0, 0x1, 0x0, 0x0, 0x0),
+	F_APCS_PLL(1612600000, 83, 0x0, 0x1, 0x0, 0x0, 0x0),
 	PLL_F_END
 };
 
@@ -382,7 +377,7 @@ static struct pll_clk a53sspll = {
 		.vdd_class = &vdd_sr2_pll,
 		.fmax = (unsigned long [VDD_SR2_PLL_NUM]) {
 			[VDD_SR2_PLL_SVS] = 1000000000,
-			[VDD_SR2_PLL_NOM] = 2500000000,
+			[VDD_SR2_PLL_NOM] = 1900000000,
 		},
 		.num_fmax = VDD_SR2_PLL_NUM,
 		CLK_INIT(a53sspll.c),
@@ -561,9 +556,8 @@ static struct clk_freq_tbl ftbl_gcc_camss_vfe0_clk[] = {
 	F( 320000000,	   gpll0, 2.5,	  0,	0),
 	F( 400000000,	   gpll0,   2,	  0,	0),
 	F( 475000000,      gpll2,   2,	  0,	0),
-	F( 550000000,      gpll2,   2,	  0,	0),
-	F( 650000000,      gpll2,   2,	  0,	0),
-	F( 720000000,      gpll2,   2,    0,    0),
+	F( 530000000,      gpll2,   2,	  0,	0),
+	F( 630000000,      gpll2,   2,	  0,	0),
 	F_END
 };
 
@@ -577,9 +571,27 @@ static struct rcg_clk vfe0_clk_src = {
 		.dbg_name = "vfe0_clk_src",
 		.ops = &clk_ops_rcg,
 		VDD_DIG_FMAX_MAP3(LOW, 160000000, NOMINAL, 320000000, HIGH,
-			720000000),
+			630000000),
 		CLK_INIT(vfe0_clk_src.c),
 	},
+};
+
+static struct clk_freq_tbl ftbl_gcc_oxili_gfx3d_630_clk[] = {
+	F(  19200000,	      xo,   1,	  0,	0),
+	F(  50000000,  gpll0_aux,  16,	  0,	0),
+	F(  80000000,  gpll0_aux,  10,	  0,	0),
+	F( 100000000,  gpll0_aux,   8,	  0,	0),
+	F( 160000000,  gpll0_aux,   5,	  0,	0),
+	F( 177780000,  gpll0_aux, 4.5,	  0,	0),
+	F( 200000000,  gpll0_aux,   4,	  0,	0),
+	F( 266670000,  gpll0_aux,   3,	  0,	0),
+	F( 294912000,	   gpll1,   3,	  0,	0),
+	F( 310000000,	   gpll2,   3,	  0,	0),
+	F( 400000000,  gpll0_aux,   2,	  0,	0),
+	F( 475000000,      gpll2,   2,	  0,	0),
+	F( 530000000,      gpll2,   2,	  0,	0),
+	F( 630000000,      gpll2,   2,	  0,	0),
+	F_END
 };
 
 static struct clk_freq_tbl ftbl_gcc_oxili_gfx3d_clk[] = {
@@ -595,9 +607,8 @@ static struct clk_freq_tbl ftbl_gcc_oxili_gfx3d_clk[] = {
 	F( 310000000,	   gpll2,   3,	  0,	0),
 	F( 400000000,  gpll0_aux,   2,	  0,	0),
 	F( 475000000,      gpll2,   2,	  0,	0),
-	F( 550000000,      gpll2,   2,	  0,	0),
-	F( 650000000,      gpll2,   2,	  0,	0),
-	F( 720000000,      gpll2,   2,    0,    0),
+	F( 530000000,      gpll2,   2,	  0,	0),
+	F( 630000000,      gpll2,   2,	  0,	0),
 	F_END
 };
 
@@ -610,8 +621,8 @@ static struct rcg_clk gfx3d_clk_src = {
 	.c = {
 		.dbg_name = "gfx3d_clk_src",
 		.ops = &clk_ops_rcg,
-		VDD_DIG_FMAX_MAP3(LOW, 192000000, NOMINAL, 310000000, HIGH,
-			720000000),
+		VDD_DIG_FMAX_MAP3(LOW, 200000000, NOMINAL, 310000000, HIGH,
+			630000000),
 		CLK_INIT(gfx3d_clk_src.c),
 	},
 };
@@ -996,7 +1007,7 @@ static struct rcg_clk csi1phytimer_clk_src = {
 static struct clk_freq_tbl ftbl_gcc_camss_cpp_clk[] = {
 	F( 160000000,	   gpll0,   5,	  0,	0),
 	F( 320000000,	   gpll0, 2.5,	  0,	0),
-	F( 720000000,	   gpll2,   2,	  0,	0),
+	F( 630000000,	   gpll2,   2,	  0,	0),
 	F_END
 };
 
@@ -1010,7 +1021,7 @@ static struct rcg_clk cpp_clk_src = {
 		.dbg_name = "cpp_clk_src",
 		.ops = &clk_ops_rcg,
 		VDD_DIG_FMAX_MAP3(LOW, 160000000, NOMINAL, 320000000, HIGH,
-			720000000),
+			465000000),
 		CLK_INIT(cpp_clk_src.c),
 	},
 };
@@ -1081,6 +1092,7 @@ static struct rcg_clk byte0_clk_src = {
 };
 
 static struct clk_freq_tbl ftbl_gcc_mdss_esc0_clk[] = {
+	F(  12800000,	      xo,   1.5,	  0,	0),
 	F(  19200000,	      xo,   1,	  0,	0),
 	F_END
 };
@@ -1101,7 +1113,6 @@ static struct rcg_clk esc0_clk_src = {
 
 static struct clk_freq_tbl ftbl_gcc_mdss_mdp_clk[] = {
 	F(  50000000,	   gpll0,  16,	  0,	0),
-	F(  80000000,	   gpll0,  10,	  0,	0),
 	F( 100000000,	   gpll0,   8,	  0,	0),
 	F( 160000000,	   gpll0,   5,	  0,	0),
 	F( 177780000,	   gpll0, 4.5,	  0,	0),
@@ -1215,6 +1226,7 @@ static struct clk_freq_tbl ftbl_gcc_sdcc2_apps_clk[] = {
 	F(  25000000,	   gpll0,  16,	  1,	2),
 	F(  50000000,	   gpll0,  16,	  0,	0),
 	F( 100000000,	   gpll0,   8,	  0,	0),
+	F( 177770000,	   gpll0, 4.5,	  0,	0),
 	F( 200000000,	   gpll0,   4,	  0,	0),
 	F_END
 };
@@ -2354,7 +2366,6 @@ static struct branch_clk gcc_venus0_vcodec0_clk = {
 	},
 };
 
-
 static struct mux_clk gcc_debug_mux;
 static struct clk_ops clk_ops_debug_mux;
 
@@ -2746,6 +2757,46 @@ static struct clk_lookup msm_clocks_lookup[] = {
 
 };
 
+#define EFUSE_BASE	0x0005c004
+#define EFUSE_BASE1	0x0005c00c
+
+static void gcc_gfx3d_fmax(struct platform_device *pdev)
+{
+	void __iomem *base;
+
+	u32 pte_efuse, shift = 2, mask = 0x7;
+	int bin, version;
+
+	base = devm_ioremap(&pdev->dev, EFUSE_BASE, SZ_8);
+	if (!base) {
+		pr_err("unable to ioremap efuse base\n");
+		return;
+	}
+	pte_efuse = readl_relaxed(base);
+	devm_iounmap(&pdev->dev, base);
+	version = (pte_efuse >> 18) & 0x3;
+	if (!version)
+		return;
+
+	base = devm_ioremap(&pdev->dev, EFUSE_BASE1, SZ_8);
+	if (!base) {
+		pr_err("unable to ioremap efuse1 base\n");
+		return;
+	}
+	pte_efuse = readl_relaxed(base);
+	devm_iounmap(&pdev->dev, base);
+	bin = (pte_efuse >> shift) & mask;
+
+	if (bin != 2)
+		return;
+
+	pr_info("%s, Version: %d, bin: %d\n", __func__, version,
+					bin);
+
+	gfx3d_clk_src.c.fmax[VDD_DIG_HIGH] = 630000000;
+	gfx3d_clk_src.freq_tbl = ftbl_gcc_oxili_gfx3d_630_clk;
+}
+
 static int msm_gcc_probe(struct platform_device *pdev)
 {
 	struct resource *res;
@@ -2823,6 +2874,8 @@ static int msm_gcc_probe(struct platform_device *pdev)
 			dev_err(&pdev->dev, "Unable to get xo_a clock!!!\n");
 		return PTR_ERR(xo_a_clk_src.c.parent);
 	}
+
+	gcc_gfx3d_fmax(pdev);
 
 	ret = of_msm_clock_register(pdev->dev.of_node,
 				msm_clocks_lookup,

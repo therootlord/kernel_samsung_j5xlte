@@ -2,3 +2,10 @@
 *.orig
 *.o
 *.ko
+*.img
+Image
+zImage
+build_kernel/
+output/
+bk.sh
+bk_.sh
