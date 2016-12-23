@@ -28,7 +28,7 @@ bool dyn_fsync_active __read_mostly = DYN_FSYNC_ACTIVE_DEFAULT;
 
 static struct notifier_block lcd_notif;
 
-
+extern void sync_filesystems(int wait);
 
 // Functions
 
@@ -84,7 +84,10 @@ static ssize_t dyn_fsync_suspend_show(struct kobject *kobj,
 
 static void dyn_fsync_force_flush(void)
 {
+	/* flush all outstanding buffers */
 	wakeup_flusher_threads(0, WB_REASON_SYNC);
+	sync_filesystems(0);
+	sync_filesystems(1);
 }
 
 
