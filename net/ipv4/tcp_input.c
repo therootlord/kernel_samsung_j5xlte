@@ -4040,6 +4040,7 @@ static void tcp_sack_remove(struct tcp_sock *tp)
 
 			/* Zap this SACK, by moving forward any other SACKS. */
 			for (i=this_sack+1; i < num_sacks; i++)
+				if (i < ARRAY_SIZE(tp->selective_acks))
 				tp->selective_acks[i-1] = tp->selective_acks[i];
 			num_sacks--;
 			continue;
