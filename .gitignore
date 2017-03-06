@@ -1,0 +1,12 @@
+*.rej
+*.orig
+*.o
+*.ko
+*.img
+Image
+zImage
+build_kernel/
+bk.sh
+bk_.sh
+*.fw
+*.bin

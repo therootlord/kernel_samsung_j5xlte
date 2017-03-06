@@ -158,7 +158,6 @@ VPATH		:= $(srctree)$(if $(KBUILD_EXTMOD),:$(KBUILD_EXTMOD))
 
 export srctree objtree VPATH
 
-CCACHE	:= ccache
 
 # SUBARCH tells the usermode build what the underlying arch is.  That is set
 # first, and if a usermode build is happening, the "ARCH=um" on the command
@@ -195,7 +194,7 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 export KBUILD_BUILDHOST := $(SUBARCH)
 ARCH		?=arm
-CROSS_COMPILE	?=$(CCACHE) ../linaro/arm-eabi-6.3.1/bin/arm-eabi-
+CROSS_COMPILE	?=/home/lubuntu/linaro-mod-arm-eabi-6.1/bin/arm-eabi-
 
 
 # Architecture as present in compile.h
@@ -242,8 +241,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 	  else if [ -x /bin/bash ]; then echo /bin/bash; \
 	  else echo sh; fi ; fi)
 
-HOSTCC       = $(CCACHE) gcc
-HOSTCXX      = $(CCACHE) g++
+HOSTCC       = gcc
+HOSTCXX      = g++
 
 GRAPHITE   = -fgraphite-identity -floop-parallelize-all -ftree-loop-linear -floop-flatten -floop-nest-optimize
 
@@ -351,7 +350,7 @@ include $(srctree)/scripts/Kbuild.include
 
 AS		        = $(CROSS_COMPILE)as
 LD		        = $(CROSS_COMPILE)ld.bfd
-CC		        = $(CCACHE) $(CROSS_COMPILE)gcc
+CC		        = $(CROSS_COMPILE)gcc
 CPP		        = $(CC) -E
 ifdef CONFIG_CC_GRAPHITE_OPTIMIZATION
 CC		       += $(GRAPHITE)
