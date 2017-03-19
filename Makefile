@@ -196,7 +196,6 @@ export KBUILD_BUILDHOST := $(SUBARCH)
 ARCH		?=arm
 CROSS_COMPILE	?=/home/lubuntu/linaro-mod-arm-eabi-6.1/bin/arm-eabi-
 
-
 # Architecture as present in compile.h
 UTS_MACHINE 	:= $(ARCH)
 SRCARCH 	:= $(ARCH)
