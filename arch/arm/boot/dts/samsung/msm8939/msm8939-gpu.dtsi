@@ -1,4 +1,4 @@
-/* Copyright (c) 2015, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2014, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -23,7 +23,8 @@
 			< 2636 >,	/* 172.8 MHz */
 			< 3076 >,	/* 201.6 MHz */
 			< 3955 >,	/* 259.2 MHz */
-			< 5053 >;	/* 331.2 MHz*/
+			< 5346 >,	/* 350.4 MHz */
+			< 6072 >;	/* 398.4 MHz */
 	};
 
 	qcom,gpu-bwmon@410000 {
@@ -47,7 +48,7 @@
 
 		qcom,chipid = <0x04000500>;
 
-		qcom,initial-pwrlevel = <1>;
+		qcom,initial-pwrlevel = <2>;
 
 		qcom,idle-timeout = <80>; //msec
 		qcom,strtstp-sleepwake;
@@ -75,13 +76,14 @@
 		/* Bus Scale Settings */
 		qcom,gpubw-dev = <&gpubw>;
 		qcom,msm-bus,name = "grp3d";
-		qcom,msm-bus,num-cases = <4>;
+		qcom,msm-bus,num-cases = <5>;
 		qcom,msm-bus,num-paths = <1>;
 		qcom,msm-bus,vectors-KBps =
 		        <26 512 0 0>,
 		        <26 512 0 2764000>,
-		        <26 512 0 4147200>,
-		        <26 512 0 5299200>;
+		        <26 512 0 5600000>,
+		        <26 512 0 5984000>,
+		        <26 512 0 6368000>;
 
 		/* GDSC oxili regulators */
 		vdd-supply = <&gdsc_oxili_gx>;
@@ -98,8 +100,7 @@
 		coresight-child-ports = <4>;
 
 		/* CPU latency parameter */
-		qcom,pm-qos-active-latency = <401>;
-		qcom,pm-qos-wakeup-latency = <401>;
+		qcom,pm-qos-latency = <401>;
 
 		/* Power levels */
 		qcom,gpu-pwrlevels {
@@ -110,24 +111,30 @@
 
 			qcom,gpu-pwrlevel@0 {
 				reg = <0>;
-				qcom,gpu-freq = <465000000>;
-				qcom,bus-freq = <3>;
+				qcom,gpu-freq = <550000000>;
+				qcom,bus-freq = <4>;
 			};
 
 			qcom,gpu-pwrlevel@1 {
 				reg = <1>;
-				qcom,gpu-freq = <400000000>;
-				qcom,bus-freq = <2>;
+				qcom,gpu-freq = <465000000>;
+				qcom,bus-freq = <3>;
 			};
 
 			qcom,gpu-pwrlevel@2 {
 				reg = <2>;
-				qcom,gpu-freq = <220000000>;
-				qcom,bus-freq = <1>;
+				qcom,gpu-freq = <400000000>;
+				qcom,bus-freq = <2>;
 			};
 
 			qcom,gpu-pwrlevel@3 {
 				reg = <3>;
+				qcom,gpu-freq = <220000000>;
+				qcom,bus-freq = <1>;
+			};
+
+			qcom,gpu-pwrlevel@4 {
+				reg = <4>;
 				qcom,gpu-freq = <19200000>;
 				qcom,bus-freq = <0>;
 			};
